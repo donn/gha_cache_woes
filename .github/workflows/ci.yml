@@ -21,6 +21,7 @@ jobs:
   go:
     name: My Cache
     runs-on: ${{ matrix.os }}
+    needs: [prepare]
     strategy:
       matrix:
         os: ["macos-13", "macos-14", "ubuntu-24.04"]

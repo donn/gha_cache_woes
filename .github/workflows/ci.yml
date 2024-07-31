@@ -18,8 +18,8 @@ jobs:
       - run: |
           mkdir -p path-with-number/
           echo "0123456789" > path-with-number/number
-  go:
-    name: My Cache
+  test:
+    name: Test Cache Restore
     runs-on: ${{ matrix.os }}
     needs: [prepare]
     strategy:

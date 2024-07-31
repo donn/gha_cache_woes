@@ -24,7 +24,7 @@ jobs:
     needs: [prepare]
     strategy:
       matrix:
-        os: ["macos-13", "macos-14", "ubuntu-24.04"]
+        os: ["macos-13", "macos-14", "ubuntu-24.04", "windows-11"]
       fail-fast: false
     steps:
       - id: restore-number

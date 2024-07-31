@@ -1,0 +1,37 @@
+name: CI
+# Events that trigger workflow
+on:
+  # Runs on all pushes to branches
+  push:
+
+jobs:
+  prepare:
+    name: Test Cache
+    runs-on: ubuntu-24.04
+    steps:
+      - id: cache-number
+        uses: actions/cache@v4
+        with:
+          path: ${{ github.workspace }}/path-with-number
+          key: number-cache
+          enableCrossOsArchive: true
+      - run: |
+          mkdir -p path-with-number/
+          echo "0123456789" > path-with-number/number
+  go:
+    name: My Cache
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: ["macos-13", "macos-14", "ubuntu-24.04"]
+      fail-fast: false
+    steps:
+      - id: restore-number
+        uses: actions/cache@v4
+        with:
+          path: ${{ github.workspace }}/path-with-number
+          key: number-cache
+          enableCrossOsArchive: true
+      - if: steps.restore-number.outputs.cache-hit != 'true'
+        run: |
+          exit -1

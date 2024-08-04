@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - run: |
-          mkdir -p /common
+          sudo mkdir -p /common
           sudo chown -R runner:runner /common
       - id: cache-number
         uses: actions/cache@v4

@@ -11,7 +11,7 @@ jobs:
     steps:
       - run: |
           sudo mkdir -p /usr/local/common
-          sudo chown -R runner:runner /usr/local/common
+          sudo chown -R runner /usr/local/common
       - id: cache-number
         uses: actions/cache@v4
         with:
@@ -31,11 +31,11 @@ jobs:
     steps:
       - run: |
           sudo mkdir -p /usr/local/common
-          sudo chown -R runner:runner /usr/local/common
+          sudo chown -R runner /usr/local/common
       - id: restore-number
         uses: actions/cache@v4
         with:
-          path: /common
+          path: /usr/local/common
           key: number-cache
           enableCrossOsArchive: true
       - if: steps.restore-number.outputs.cache-hit != 'true'

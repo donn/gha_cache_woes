@@ -9,15 +9,17 @@ jobs:
     name: Test Cache
     runs-on: ubuntu-24.04
     steps:
+      - run: |
+          mkdir -p /common
+          sudo chown -R runner:runner /common
       - id: cache-number
         uses: actions/cache@v4
         with:
-          path: ${{ github.workspace }}/path-with-number
+          path: /common
           key: number-cache
           enableCrossOsArchive: true
       - run: |
-          mkdir -p path-with-number/
-          echo "0123456789" > path-with-number/number
+          echo "0123456789" > /common/numbers
   test:
     name: Test Cache Restore
     runs-on: ${{ matrix.os }}
@@ -27,10 +29,13 @@ jobs:
         os: ["macos-13", "macos-14", "ubuntu-24.04", "windows-2022"]
       fail-fast: false
     steps:
+      - run: |
+          mkdir -p /common
+          sudo chown -R runner:runner /common
       - id: restore-number
         uses: actions/cache@v4
         with:
-          path: ${{ github.workspace }}/path-with-number
+          path: /common
           key: number-cache
           enableCrossOsArchive: true
       - if: steps.restore-number.outputs.cache-hit != 'true'

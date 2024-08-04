@@ -10,16 +10,16 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - run: |
-          sudo mkdir -p /common
-          sudo chown -R runner:runner /common
+          sudo mkdir -p /usr/local/common
+          sudo chown -R runner:runner /usr/local/common
       - id: cache-number
         uses: actions/cache@v4
         with:
-          path: /common
+          path: /usr/local/common
           key: number-cache
           enableCrossOsArchive: true
       - run: |
-          echo "0123456789" > /common/numbers
+          echo "0123456789" > /usr/local/common/numbers
   test:
     name: Test Cache Restore
     runs-on: ${{ matrix.os }}
@@ -30,8 +30,8 @@ jobs:
       fail-fast: false
     steps:
       - run: |
-          mkdir -p /common
-          sudo chown -R runner:runner /common
+          sudo mkdir -p /usr/local/common
+          sudo chown -R runner:runner /usr/local/common
       - id: restore-number
         uses: actions/cache@v4
         with:
